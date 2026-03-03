@@ -1,7 +1,18 @@
 import './App.css'
+import{userState, useState} from 'react'
 
-function TwitterCard({username, name}){
-    const imageSrc = `https://unavatar.io/${username}`
+function TwitterCard({children, username, name}){
+    
+    const [isFollowing, setIsFollowing] = useState(false)
+    
+    const text = isFollowing ? 'Siguiendo' : 'Seguir'
+    const buttonClasename = isFollowing 
+    ?'tw-article-aside-button is-following'
+    :'tw-article-aside-button'
+
+    const handleClick = () =>{
+        setIsFollowing(!isFollowing)
+    }
 
     return(
         <article className="tw-article">
@@ -9,16 +20,16 @@ function TwitterCard({username, name}){
                 <img 
                 className="tw-article-header-img"
                 alt="El avate demidudev" 
-                src={imageSrc}>                    
+                src={`https://unavatar.io/${username}`}>                    
                 </img>
                 <div className="tw-article-header-div">
-                    <strong>{name}</strong>                                    
+                    <strong>{children}</strong>                                    
                     <span className='tw-article-header-div-span'>@{username}</span>
                 </div>
             </header>
             <aside className="tw-article-aside">
-                <button className="tw-article-aside-button">
-                    Follow
+                <button className={buttonClasename} onClick={handleClick}>
+                    {text}
                 </button>
             </aside>
         </article>
